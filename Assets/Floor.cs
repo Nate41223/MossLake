@@ -21,4 +21,12 @@ public class Floor : MonoBehaviour {
         }
 
     }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<PlayerMovement>().canJump = false;
+        }
+
+    }
 }

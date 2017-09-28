@@ -6,26 +6,46 @@ public class PlayerMovement : MonoBehaviour {
 
     public int walkSpeed = 60;
     public int runSpeed = 100;
+    public int swimSpeed = 20;
     public bool canJump = false;
+    public bool isInWater = false;
 
     Rigidbody2D body;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         body = GetComponent<Rigidbody2D>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
-        if (isRunning()) LeftRightMovement(runSpeed);
-        else LeftRightMovement(walkSpeed);
-
-        if (Input.GetButtonDown("Jump") && canJump == true)
+        if (isInWater)
         {
-            body.AddForce(new Vector2(0, 30), ForceMode2D.Impulse);
-            canJump = false;
+            body.freezeRotation = false;
+
+            LeftRightMovement(swimSpeed);
+
+            if(Input.GetAxis("Vertical") > 0)
+            {
+                body.velocity += new Vector2(0, 15 * Input.GetAxis("Vertical")) * Time.deltaTime;
+            }
+            else if (Input.GetAxis("Vertical") < 0)
+            {
+                body.velocity += new Vector2(0, 15 * Input.GetAxis("Vertical")) * Time.deltaTime;
+            }
+
+        } else
+        {
+            if (isRunning()) LeftRightMovement(runSpeed);
+            else LeftRightMovement(walkSpeed);
+
+            if (Input.GetButtonDown("Jump") && canJump == true)
+            {
+                body.AddForce(new Vector2(0, 30), ForceMode2D.Impulse);
+                canJump = false;
+            }
         }
+        
     }
 
     private bool isRunning()
