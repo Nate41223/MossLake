@@ -12,7 +12,7 @@ public class PlayerPhysicsManagement : MonoBehaviour {
     private float waterMass = 1;
     private float waterLinearDrag = 8;
     private float waterAngularDrag = .05f;
-    private float waterGravityScale = .5f;
+    private float waterGravityScale = 0;
 
     // Use this for initialization
     void Start () {

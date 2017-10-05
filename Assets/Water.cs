@@ -21,6 +21,12 @@ public class Water : MonoBehaviour {
             collision.gameObject.GetComponent<PlayerMovement>().isInWater = true;
             collision.gameObject.GetComponent<PlayerPhysicsManagement>().waterPhysics();
         }
+
+        if (collision.gameObject.tag == "Raft")
+        {
+            collision.gameObject.GetComponent<Raft>().waterPhysics();
+            collision.gameObject.GetComponent<Raft>().isInWater = true;
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -29,6 +35,17 @@ public class Water : MonoBehaviour {
         {
             collision.gameObject.GetComponent<PlayerMovement>().isInWater = false;
             collision.gameObject.GetComponent<PlayerPhysicsManagement>().normalPhysics();
+
+            if (Input.GetButton("Jump"))
+            {
+                collision.gameObject.GetComponent<PlayerMovement>().waterJump();
+            }
+        }
+
+        if (collision.gameObject.tag == "Raft")
+        {
+            collision.gameObject.GetComponent<Raft>().normalPhysics();
+            collision.gameObject.GetComponent<Raft>().isInWater = false;
         }
     }
 }

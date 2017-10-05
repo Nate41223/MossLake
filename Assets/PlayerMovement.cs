@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public int walkSpeed = 60;
     public int runSpeed = 100;
-    public int swimSpeed = 20;
+    public int swimSpeed = 100;
     public bool canJump = false;
     public bool isInWater = false;
 
@@ -21,17 +21,15 @@ public class PlayerMovement : MonoBehaviour {
 	void Update () {
         if (isInWater)
         {
-            body.freezeRotation = false;
-
             LeftRightMovement(swimSpeed);
 
             if(Input.GetAxis("Vertical") > 0)
             {
-                body.velocity += new Vector2(0, 15 * Input.GetAxis("Vertical")) * Time.deltaTime;
+                body.velocity += new Vector2(0, swimSpeed * Input.GetAxis("Vertical")) * Time.deltaTime;
             }
             else if (Input.GetAxis("Vertical") < 0)
             {
-                body.velocity += new Vector2(0, 15 * Input.GetAxis("Vertical")) * Time.deltaTime;
+                body.velocity += new Vector2(0, swimSpeed * Input.GetAxis("Vertical")) * Time.deltaTime;
             }
 
         } else
@@ -66,5 +64,10 @@ public class PlayerMovement : MonoBehaviour {
             body.velocity += new Vector2(speed * Input.GetAxis("Horizontal"), 0) * Time.deltaTime;
             if (transform.rotation.y == 0) transform.Rotate(new Vector3(0, 180, 0));
         }
+    }
+
+    public void waterJump()
+    {
+        body.AddForce(new Vector2(0, 10), ForceMode2D.Impulse);
     }
 }
