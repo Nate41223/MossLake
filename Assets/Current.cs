@@ -21,7 +21,7 @@ public class Current : MonoBehaviour {
             Vector3 localForward = -transform.right;
             Vector2 localForwards = new Vector2(localForward.x, localForward.y);
 
-            player.velocity += localForwards * 100 * Time.deltaTime;
+            player.velocity += localForwards * 200 * Time.deltaTime;
         }
 	}
 
